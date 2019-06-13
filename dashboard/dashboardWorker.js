@@ -4,7 +4,7 @@
     http://www.tothenew.com/blog/connect-to-postgresql-using-javascript/
 ------------------------------------------------------------------------------------
 */
-'use strict'
+'use strict'     
 var onmessage = function(e) {
     //--------------------------------------------------
     console.log ('acesso ao worker. Iniciando o looping de varredura de arquivo');
