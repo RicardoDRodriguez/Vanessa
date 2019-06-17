@@ -1,3 +1,0 @@
-/*
-	JunitTest para acesso ao banco de dados
-*/
