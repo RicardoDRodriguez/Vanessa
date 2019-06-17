@@ -5,20 +5,23 @@
 ------------------------------------------------------------------------------------
 */
 
-'use strict';
 
 /**
  * Module exports.
  * @public
  */
 
-module.exports = {
 
-	dashtoString: function(){
-				return ("funcao DaskboardWorker encontrada"); 
-	},
+var DashboardWorker = exports = module.exports = {};
+
+
+DashboardWorker.dashtoString =  
+	function(){
+				return ("Mensagem interna: Funcao DaskboardWorker Encontrada"); 
+	};
 		 
-	onmessage: function(e) {
+DashboardWorker.onmessage = 
+	function(e) {
 	    //--------------------------------------------------
 		console.log ('acesso ao worker. Iniciando o looping de varredura de arquivo');
 		//	--------------------------------------------------
@@ -35,9 +38,9 @@ module.exports = {
 		console.log ('retornando ao script principal');
 		//	--------------------------------------------------
 		self.close();
-	},
+	}
 	
-	postgres: { 
+DashboardWorker.postgres = { 
 	    args: {
 	       user: 'postgres',
 	       password:  'postgres',
@@ -53,28 +56,41 @@ module.exports = {
 	       },  
 	       
 	    },
-	},
+	}
 	
-	acessoDataBase: function(sala){
-	    var pg = require('pg');
+DashboardWorker.acessoDataBase= 
+	function(sala){
+	  
+		const pg = require('pg');
+
 	    var conn = new pg.Client({
-	        host: postgres.args.host,
-	        port: postgres.args.port,
-	        user: postgres.args.user,
-	        password: postgres.args.password,
-	        database: postgres.args.database
+	        host: DashboardWorker.postgres.args.host,
+	        port: DashboardWorker.postgres.args.port,
+	        user: DashboardWorker.postgres.args.user,
+	        password: DashboardWorker.postgres.args.password,
+	        database: DashboardWorker.postgres.args.database
 	    });
-	    conn.connect();
-	    var sQuery = postgres.query.xmppLog.prefix + sala + postgres.query.xmppLog.sufix;
-	    var query  = conn.query(sQuery);
 	    
-	    query.on("row", function(row,result){
+	    conn.connect();
+	    
+	    var sQuery = DashboardWorker.postgres.query.xmppLog.prefix + 
+	    			 sala + 
+	    			 DashboardWorker.postgres.query.xmppLog.sufix;
+	    
+	    console.log(sQuery);
+	    
+	    const myQuery  = conn.query(sQuery,
+	    				(err, res) => {
+	    						console.log(err ? err.stack : res.rows[0].message)
+	    					pg.end()
+	    			});
+	    
+	    myQuery.on('row', function(row,result){
 	        result.addRow(row);
 	    });
 	    
 	    return result;
-	},
+	}
 	
-}
 
 
