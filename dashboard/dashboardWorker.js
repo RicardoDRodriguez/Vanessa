@@ -50,10 +50,8 @@ DashboardWorker.postgres = {
 	       database: 'openfire'
 	    },
 	    query: {
-	       xmppLog: {
-	           prefix: "SELECT msg_time, msg_user, msg_text from public.xmpp_log where msg_room = '",
-	           sufix: "';"
-	       },  
+	       xmppLog: 
+	          "SELECT msg_time, msg_user, msg_text from public.xmpp_log where (msg_room = ?);"  
 	       
 	    },
 	}
@@ -61,36 +59,47 @@ DashboardWorker.postgres = {
 DashboardWorker.acessoDataBase= 
 	function(sala){
 	  
-		const pg = require('pg');
-
-	    var conn = new pg.Client({
+		const {Connection} = require('pg');
+		const connection =  new Connection({
 	        host: DashboardWorker.postgres.args.host,
 	        port: DashboardWorker.postgres.args.port,
 	        user: DashboardWorker.postgres.args.user,
 	        password: DashboardWorker.postgres.args.password,
-	        database: DashboardWorker.postgres.args.database
-	    });
-	    
-	    conn.connect();
-	    
-	    var sQuery = DashboardWorker.postgres.query.xmppLog.prefix + 
+	        database: DashboardWorker.postgres.args.database	
+		});
+		const q = require('q');
+		var deferred = q.defer(); 
+		
+		connection.connect();
+		
+	 /*   var sQuery = DashboardWorker.postgres.query.xmppLog.prefix + 
 	    			 sala + 
 	    			 DashboardWorker.postgres.query.xmppLog.sufix;
 	    
 	    console.log(sQuery);
 	    
-	    const myQuery  = conn.query(sQuery,
-	    				(err, res) => {
-	    						console.log(err ? err.stack : res.rows[0].message)
-	    					pg.end()
-	    			});
+	    conn.query(sQuery).then (rows => {return rows});
+	    conn.end();
 	    
-	    myQuery.on('row', function(row,result){
-	        result.addRow(row);
-	    });
-	    
-	    return result;
-	}
-	
+	    return 'Não encontrei registros';
+	}*/
+		
+		var query_str = DashboardWorker.postgres.query.xmppLog;
+		var query_var = [sala];
+
+		var query = connection.query(query_str, query_var, function (err, rows, fields) {
+		    //if (err) throw err;
+		    if (err) {
+		        //throw err;           
+		        deferred.reject(err);
+		    }
+		    else {
+		        //console.log(rows);           
+		        deferred.resolve(rows);
+		    }
+		}); 
+
+		return deferred.promise;
+}
 
 
