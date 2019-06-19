@@ -57,9 +57,10 @@ DashboardWorker.postgres = {
 	}
 	
 DashboardWorker.acessoDataBase= 
-	function(sala){
+	async function(sala){
 	  
 		const {Connection} = require('pg');
+		
 		const connection =  new Connection({
 	        host: DashboardWorker.postgres.args.host,
 	        port: DashboardWorker.postgres.args.port,
@@ -67,39 +68,35 @@ DashboardWorker.acessoDataBase=
 	        password: DashboardWorker.postgres.args.password,
 	        database: DashboardWorker.postgres.args.database	
 		});
+		
 		const q = require('q');
 		var deferred = q.defer(); 
 		
-		connection.connect();
-		
-	 /*   var sQuery = DashboardWorker.postgres.query.xmppLog.prefix + 
-	    			 sala + 
-	    			 DashboardWorker.postgres.query.xmppLog.sufix;
-	    
-	    console.log(sQuery);
-	    
-	    conn.query(sQuery).then (rows => {return rows});
-	    conn.end();
-	    
-	    return 'Não encontrei registros';
-	}*/
-		
-		var query_str = DashboardWorker.postgres.query.xmppLog;
-		var query_var = [sala];
+		try { 
+			connection.connect();
+			console.log ("conexão realizada com sucesso");
+			
+			const query_str = DashboardWorker.postgres.query.xmppLog;
+			const query_var = [sala];
+	
+			const query = await connection.query(query_str, query_var, function (err, rows, fields) {
+			    if (err) {
+			        //throw err;           
+			        deferred.reject(err);
+			    }
+			    else {
+			        console.table(rows.rows);           
+			        deferred.resolve( JSON.stringify(rows));
+			    }
+			}); 
+			await connection.end();
+		} catch (ex){
+			 console.log ( 'Something is wrong => ' + ex);
+		} finally {
 
-		var query = connection.query(query_str, query_var, function (err, rows, fields) {
-		    //if (err) throw err;
-		    if (err) {
-		        //throw err;           
-		        deferred.reject(err);
-		    }
-		    else {
-		        //console.log(rows);           
-		        deferred.resolve(rows);
-		    }
-		}); 
-
-		return deferred.promise;
+			return await deferred.promise;
+		}
+		
 }
 
 
