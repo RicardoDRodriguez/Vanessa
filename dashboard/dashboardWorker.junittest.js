@@ -7,6 +7,5 @@
 */
 const dwr = require ( './dashboardWorker.js')
 		  
-//console.log(dwr.dashtoString());
-console.log(dwr.acessoDataBase('teste2'));
-
+console.log(dwr.dashtoString());
+result = dwr.execute('teste2')

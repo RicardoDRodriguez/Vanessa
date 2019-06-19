@@ -3,13 +3,22 @@
     Class DashboardMain
 ------------------------------------------------------------------------------------
 */
-DashboardMain = function(){
-    if (! window.Worker){
-        console.error ('browser nao compativel - usar Firefox ou chrome');
-    }
-    var worker = new Worker ('dashboardWorker.js');
-    worker.addEventListener('message', function(event){
-        console.log(event);
-    });
-    worker.postMessage('start');
+
+/**
+ * Module exports.
+ * @public
+ */
+
+var DashboardMain = exports = module.exports = {};
+
+DashboardMain.dashtoString =  
+	function(){
+		return ("Mensagem interna: Funcao DashboardMain Encontrada"); 
+	};
+DashboardMain.execute = function() {
+	const dwr = require ( './dashboardWorker.js')
+	console.log(dwr.dashtoString());
+	dwr.execute('teste2');
+
 }
+

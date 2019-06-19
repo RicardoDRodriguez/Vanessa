@@ -6,9 +6,9 @@
 */
 
 Mensagem = function (dateString,content) {
+		const DateDashboard = require('./dateDashboard.js');
         this.dateDashboard = new DateDashboard(dateString);
         this.content = content; 
-        this.toString = function() {
-            return this.dateDashboard.toString() + " " + this.content;
-        }
 };
+
+exports = module.exports = Mensagem;

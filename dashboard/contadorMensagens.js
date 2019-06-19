@@ -4,16 +4,18 @@
     Objetivo: POJO -> Objeto Participante
     ---------------------------------------------------
 */
-ContadorMensagens = function(){
-    create = function(mensagem){
-        this.minutes = mensage.dateDashboard.getDiferenceFromNow();
+var ContadorMensagens = exports = module.exports = {};
+
+ContadorMensagens.create = function(mensagem){
+        this.minutes = mensagem.dateDashboard.getDiferenceFromNow();
         this.totalMensagens = 0;
-    }
-    this.compareTo = function(outroContadorMensagens){
-        return (this.minutes == outroContadorMensagens.minutes)    
-    };
-    this.adicionarTotalMensagens= function (){
-        this.totalMensagens += 1;
-    }
- 
 }
+
+ContadorMensagens.compareTo = function(outroContadorMensagens){
+        return (this.minutes == outroContadorMensagens.minutes)    
+}
+
+ContadorMensagens.adicionarTotalMensagens= function (){
+        this.totalMensagens += 1;
+}
+exports = module.exports = ContadorMensagens; 
