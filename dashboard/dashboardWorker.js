@@ -2,6 +2,10 @@
 ------------------------------------------------------------------------------------    
     Class DashboardWorker
     http://www.tothenew.com/blog/connect-to-postgresql-using-javascript/
+    
+    // graficos do google
+    
+    https://www.npmjs.com/package/google-charts
 ------------------------------------------------------------------------------------
 */
 
