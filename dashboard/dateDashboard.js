@@ -2,12 +2,12 @@
     Classe DateDashboard
  */
 
-DateDashboard = function(dateString){
+DateDashboard = function(date){
 
 	this.error = true;
-	this.date = null;
-	this.dateString = dateString;
-	this.error = this.dateString = isNaN || dateString == '';
+	this.dateString = null;
+	this.date = date;
+	this.error = this.date = isNaN || date == '';
 
 	this.converteData = function(){ //data no formato dd-mm-yyyy hh:mn:ss
 		if (this.error) {
@@ -31,6 +31,7 @@ DateDashboard = function(dateString){
 		}
 		return this.date.getTimeStamp();
 	}
+	
 	this.getDiferenceFromNow = function() {
 		if (this.error) {
 			return this.getMessageError();
