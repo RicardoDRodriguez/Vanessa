@@ -57,12 +57,25 @@ DashboardWorker.process = function(result) {
 		const ContadorMensagens = require('./contadorMensagens.js')
 		var participantes = [];
 		var mensagens = [];
+		var contadoresMensagens = []
+		var start;
+	
+		//====================================
+		// Identifica a hora inicial do chat
+		//====================================
 
+		if (result[0]){
+		 	start = result[0].msg_time;
+		 	console.log('Start: ' + start);
+		}
+	
 		for(var i= 0 ; i < result.length ; ++i) {
 				line = result[i];
 				
 				var mensagem =  new Mensagem(line.msg_time,line.msg_text);
-				
+				//==============================================================================
+				// Calcula dados dos participantes
+				//==============================================================================				
 			    var posicao = DashboardWorker.procuraParticipante(participantes, line.msg_user);
 				
 				if (posicao < 0){
@@ -73,16 +86,39 @@ DashboardWorker.process = function(result) {
 					participante.mensagens.push(mensagem);
 					participantes[posicao] = participante; 
 				}
+				
+				//===============================================================================
+				// Calcula dados dos contadores de mensagem (minutos são inversos: menor é maior
+				//===============================================================================
+			   
+			   var minutes = DashboardWorker.getDifferenceFromStart(line.msg_time,start);
+			    			
+			   posicao = DashboardWorker.procuraContador(contadoresMensagens, minutes);
+				
+				if (posicao < 0){
+					var contadorMensagens = new ContadorMensagens(minutes);
+					contadoresMensagens.push(contadorMensagens);
+				} else {
+					var contadorMensagens = contadoresMensagens[posicao];
+					contadorMensagens.adicionarTotalMensagens();
+					contadoresMensagens[posicao] = contadorMensagens; 
+				}
+				
+				
 		}
 		
 		console.table(participantes);
+		console.log("==================================================================");
+		console.table(contadoresMensagens);
 
 		//	--------------------------------------------------
 		console.log ('retornando ao script principal');
 		//	--------------------------------------------------
 
 	}
-
+    /**
+    	Procura por Participante no Vetor
+    */
 	DashboardWorker.procuraParticipante = function (participantes, nome){
 		var result = -1;
 		for (var k=0; k < participantes.length; ++k){
@@ -94,3 +130,28 @@ DashboardWorker.process = function(result) {
 	
 	}
 
+   /**
+    	Procura por contador no Vetor
+    */
+	DashboardWorker.procuraContador = function (contadoresMensagens, minutes){
+		var result = -1;
+		for (var k=0; k < contadoresMensagens.length; ++k){
+			if (contadoresMensagens[k].minutes == minutes){
+			   return k;
+			}
+		}
+		return result;
+	
+	}
+
+	/**
+    	Calcula a diferençca de tempo para o contador
+    */
+	
+	DashboardWorker.getDifferenceFromStart = function(theDate,start){
+	    minutes = Math.round((theDate.getTime() - start.getTime())/60000)
+		return minutes ;
+	}
+	
+	
+	

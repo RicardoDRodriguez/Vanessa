@@ -5,10 +5,9 @@
     ---------------------------------------------------
 */
 
-Mensagem = function (dateString,content) {
+Mensagem = function (date,content) {
 		const DateDashboard = require('./dateDashboard.js');
-        this.dateDashboard = new DateDashboard(dateString);
-        console.log(this.dateDashboard);
+        this.dateDashboard = new DateDashboard(date);
         this.content = content; 
         this.hashString = function() {
     		return (this.dateDashboard+ ' ' + this.content);
