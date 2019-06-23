@@ -40,7 +40,9 @@ DashboardWorker.execute=  function(sala){
 			console.log (myQuery);
 		
 			client.query( myQuery, 	(err,res)=>{
-				DashboardWorker.process(res.rows);
+				if (res){
+					DashboardWorker.process(res.rows);
+				}
 				client.end();
 			})
 		} catch (ex){
@@ -49,6 +51,7 @@ DashboardWorker.execute=  function(sala){
 		} 
 }
 DashboardWorker.process = function(result) {
+	
 	    //---------------------------------------------------------------------------------------------------
 		console.log ('acesso ao moduloDashboardWorker.process. Iniciando o looping de varredura de arquivo');
 		//	-------------------------------------------------------------------------------------------------
