@@ -1,0 +1,37 @@
+<%- contentFor('body') %>
+
+   <script type="text/javascript">
+   $(document).ready(function() { 
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChartLine);
+
+      function drawChartLine() {
+       var data = google.visualization.arrayToDataTable(<%= db_data %>);
+
+        debug;
+        
+        var options = {
+          title: 'Mensagens por Minuto',
+          curveType: 'function',
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('graph1'));
+    	chart.draw(data, options);
+        
+      }
+    })
+    </script>
+
+	<div id='graph1'>
+ 
+	</div>
+
+	<div id='graph2'>
+	</div>
+
+	<div id='graph3'>
+	</div>
+	
+
+

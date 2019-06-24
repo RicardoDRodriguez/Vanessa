@@ -4,6 +4,8 @@
  */
 
 const express = require ("express");
+const bodyParser = require('body-parser')
+const expressLayouts = require('express-ejs-layouts')
 
 //----------------------------
 //Express handlebars module
@@ -12,8 +14,9 @@ const express = require ("express");
 const exphbs = require('express-handlebars');
 const app = express() //  cria a aplicação.
 
-//app.engine('handlebars', exphbs({defaultLayout: 'base'}));
-//app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs')    // Setamos que nossa engine será o ejs
+app.use(expressLayouts)          // Definimos que vamos utilizar o express-ejs-layouts na nossa aplicação
+app.use(bodyParser.urlencoded()) // Com essa configuração, vamos conseguir parsear o corpo das requisições
 
 app.get('/', function(req,res){
 
@@ -21,7 +24,8 @@ app.get('/', function(req,res){
 	console.log(dm.dashtoString());
 	result = dm.execute();
 	db_data = dm.getContadoresforGoogleChart();
-	res.sendfile(__dirname+"/html/index.html", {db_data:db_data} );
+	res.render(__dirname+"/ejs/index", { db_data:db_data } );
+	
 	
 });
 
