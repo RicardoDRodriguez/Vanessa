@@ -15,7 +15,6 @@
  * @public
  */
 
-
 var DashboardWorker = exports = module.exports = {};
 
 
@@ -110,11 +109,9 @@ DashboardWorker.process = function(result) {
 				
 		}
 		
-		console.table(participantes);
+		// console.table(participantes);
 		console.log("==================================================================");
-		console.table(contadoresMensagens);
-
-		//	--------------------------------------------------
+		// console.table(contadoresMensagens);
 		console.log ('retornando ao script principal');
 		//	--------------------------------------------------
 
@@ -156,5 +153,16 @@ DashboardWorker.process = function(result) {
 		return minutes ;
 	}
 	
+	DashboardWorker.getContadoresforGoogleChart = function(){
+		var data = [
+	          ['Minutos', 'Mensagens'],
+	          ['2004',  1000],
+	          ['2005',  1170],
+	          ['2006',  660],
+	          ['2007',  1030]
+	        ];
+		
+		return data;
+	}
 	
 	
