@@ -1,14 +1,21 @@
 <%- contentFor('body') %>
 
    <script type="text/javascript">
-   $(document).ready(function() { 
+      
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChartLine);
 
       function drawChartLine() {
-       var data = google.visualization.arrayToDataTable(<%= db_data %>);
-
-        debug;
+       var myArray = [];
+       
+       myArray.push (["Minutos","Mensagens"]);
+	   <% for(var i=0; i < db_data.data.length; i++) { %>
+             myArray.push (["<%= db_data.data[i].ano %>",<%= db_data.data[i].qtde %>]);
+	   <% } %>
+       
+       console.table (myArray);
+       
+       var data = google.visualization.arrayToDataTable(myArray);
         
         var options = {
           title: 'Mensagens por Minuto',
@@ -20,8 +27,27 @@
     	chart.draw(data, options);
         
       }
-    })
     </script>
+
+   <table class="table table-inverse">
+      <thead>
+        <tr>
+          <th>ano</th>
+          <th>qtde</th>
+         </tr>
+      </thead>
+
+      <tbody>
+        <% for(var i=0; i < db_data.data.length; i++) { %>
+       <tr>
+
+         <td><%= db_data.data[i].ano %></td>
+         <td><%= db_data.data[i].qtde %></td>
+       </tr>
+    <% } %>
+      </tbody>
+
+    </table>
 
 	<div id='graph1'>
  

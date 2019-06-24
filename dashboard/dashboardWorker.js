@@ -154,13 +154,12 @@ DashboardWorker.process = function(result) {
 	}
 	
 	DashboardWorker.getContadoresforGoogleChart = function(){
-		var data = [
-	          ['Minutos', 'Mensagens'],
-	          ['2004',  1000],
-	          ['2005',  1170],
-	          ['2006',  660],
-	          ['2007',  1030]
-	        ];
+		var data = { 'data' : [
+				{'ano':'2004', 'qtde' :  1000},
+				{'ano':'2005', 'qtde' :  1170},
+				{'ano':'2006', 'qtde' :  660},
+				{'ano':'2007', 'qtde' :  1030}
+	        ]};
 		
 		return data;
 	}

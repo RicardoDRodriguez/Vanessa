@@ -24,6 +24,7 @@ app.get('/', function(req,res){
 	console.log(dm.dashtoString());
 	result = dm.execute();
 	db_data = dm.getContadoresforGoogleChart();
+	console.table (db_data);
 	res.render(__dirname+"/ejs/index", { db_data:db_data } );
 	
 	
