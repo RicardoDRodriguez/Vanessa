@@ -14,7 +14,7 @@ Participante = function(nome,mensagem){
 	this.totalCaracteres = function(){
 		result = 0;
 		for (var i = 0 ; i < this.mensagens.length ; ++i){
-			result += mensagens[i].content.length;
+			result += this.mensagens[i].content.length;
 		}
 		return result;
 	}

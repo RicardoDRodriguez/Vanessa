@@ -196,7 +196,7 @@ DashboardWorker = function () {
 		
 		for (var z = start; z < contadoresMensagens.length; ++z){
 			var posicao ="M-"+(contadoresMensagens.length-z-1)
-			arrayLabelValue.push (new this.LabelValue(posicao, contadoresMensagens[z].totalMensagens))
+			arrayLabelValue.push (new this.LabelValue(posicao, contadoresMensagens[z].totalMensagens,0,0))
 		}
 
 		var data = { 'data' : arrayLabelValue};
@@ -204,9 +204,32 @@ DashboardWorker = function () {
 		return data;
 	},
 
-	this.LabelValue= function (myLabel,myValue){
+	this.getBarforGoogleChart= function(){
+		console.log('=============================================================');
+		console.log('Iniciei o getContadores');
+		
+		var start = 0;
+
+		var arrayLabelValue = [];
+		
+		for (var z = start; z < participantes.length; ++z){
+			arrayLabelValue.push (new this.LabelValue(participantes[z].nome, 
+					participantes[z].totalMensagens(),participantes[z].totalCaracteres(),0))
+		}
+
+		var data = { 'data' : arrayLabelValue};
+		
+		console.log('=============================================================');
+		console.log(data);
+		
+		return data;
+	},
+	
+	this.LabelValue= function (myLabel,myValue,myValue1,myValue2){
 		this.label = myLabel;
 		this.value = myValue;
+		this.value1 = myValue1;
+		this.value2 = myValue2;
 	}
 
 
