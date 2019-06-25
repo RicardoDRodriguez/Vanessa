@@ -16,18 +16,17 @@ const app = express() //  cria a aplicação.
 
 app.set('view engine', 'ejs')    // Setamos que nossa engine será o ejs
 app.use(expressLayouts)          // Definimos que vamos utilizar o express-ejs-layouts na nossa aplicação
-app.use(bodyParser.urlencoded()) // Com essa configuração, vamos conseguir parsear o corpo das requisições
+//app.use(bodyParser.urlencoded()) // Com essa configuração, vamos conseguir parsear o corpo das requisições
 
-app.get('/', function(req,res){
+app.get('/', async(req,res) =>{
 
-	const dm = require ( __dirname+'/dashboard/dashboardMain.js')
-	console.log(dm.dashtoString());
-	result = dm.execute();
-	db_data = dm.getContadoresforGoogleChart();
-	console.table (db_data);
-	res.render(__dirname+"/ejs/index", { db_data:db_data } );
-	
-	
+	const dwrjs = require ( __dirname+'/dashboard/dashboardWorker.js');
+	dwr = new dwrjs();
+	console.log(dwr.dashtoString());
+	await dwr.execute('teste2').then( function () {
+		db_data = dwr.getContadoresforGoogleChart();
+		res.render(__dirname+"/ejs/index", { db_data:db_data } );
+	}) 
 });
 
 //-------------------

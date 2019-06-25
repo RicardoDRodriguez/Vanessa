@@ -8,11 +8,13 @@
       function drawChartLine() {
        var myArray = [];
        
-       myArray.push (["Minutos","Mensagens"]);
-	   <% for(var i=0; i < db_data.data.length; i++) { %>
-             myArray.push (["<%= db_data.data[i].ano %>",<%= db_data.data[i].qtde %>]);
-	   <% } %>
        
+       <% if (db_data) { %>
+       		 myArray.push (["Minutos","Mensagens"]);
+	   		<% for(var i=0; i < db_data.data.length; i++) { %>
+        	     myArray.push (["<%= db_data.data[i].label %>",<%= db_data.data[i].value %>]);
+	  		 <% } %>
+       <% } %>
        console.table (myArray);
        
        var data = google.visualization.arrayToDataTable(myArray);
@@ -23,7 +25,7 @@
           legend: { position: 'top' }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('graph1'));
+        var chart = new google.visualization.LineChart(document.getElementById('graph3'));
     	chart.draw(data, options);
         
       }
