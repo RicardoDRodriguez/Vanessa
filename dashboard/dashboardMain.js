@@ -9,18 +9,29 @@
  * @public
  */
 
-var DashboardMain = exports = module.exports = {};
-const dwr = require ( './dashboardWorker.js')
+DashboardMain = function() {
+	
+	const dwrjs = require ( './dashboardWorker.js');
+	this.dwr = new dwrjs();
 
-DashboardMain.dashtoString =  
-	function(){
+	this.dashtoString = function(){
 		return ("Mensagem interna: Funcao DashboardMain Encontrada"); 
-	};
-DashboardMain.execute = function() {
-	console.log(dwr.dashtoString());
-	dwr.execute('teste2');
+	}
+	
+	this.execute=  async function() {
+			console.log('=============================================================');
+			console.log(this.dwr.dashtoString());
+			console.log('=============================================================');
+			await this.dwr.execute('teste2');
+	}
+	
+	this.getContadoresforGoogleChart= function(){
+		console.log('=============================================================');
+		console.log('Iniciei o getContadores');
+		return this.dwr.getContadoresforGoogleChart();
+	}
+	
 }
 
-DashboardMain.getContadoresforGoogleChart = function(){
-	return dwr.getContadoresforGoogleChart();
-}
+exports = module.exports = DashboardMain;
+

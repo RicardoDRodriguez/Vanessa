@@ -5,7 +5,6 @@
     ---------------------------------------------------
  */
 
-var Participante = exports = module.exports = {};
 
 Participante = function(nome,mensagem){
 	this.nome = nome;
