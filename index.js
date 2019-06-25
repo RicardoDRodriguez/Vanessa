@@ -25,8 +25,8 @@ app.get('/', async(req,res) =>{
 	console.log(dwr.dashtoString());
 	 dwr.execute('teste2').then( result => {
 		dwr.process(result);
-		db_data = dwr.getContadoresforGoogleChart();
-		res.render(__dirname+"/ejs/index", { db_data:db_data } );
+		db_line = dwr.getContadoresforGoogleChart();
+		res.render(__dirname+"/ejs/index", { db_line: db_line } );
 	}) 
 });
 

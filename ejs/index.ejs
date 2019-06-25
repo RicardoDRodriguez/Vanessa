@@ -2,32 +2,64 @@
 
    <script type="text/javascript">
       
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChartLine);
+      google.charts.load('current', {'packages':['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawCharts);
 
-      function drawChartLine() {
-       var myArray = [];
+      function drawCharts() {
        
+       // ==============================================================
+       // Grafico de Barras
+       // ==============================================================
+	    var dataBar = google.visualization.arrayToDataTable([
+        ['Participante', 'Mensagens', 'Caracteres'],
+        ['New York City, NY', 8175000, 8008000],
+        ['Los Angeles, CA', 3792000, 3694000],
+        ['Chicago, IL', 2695000, 2896000],
+        ['Houston, TX', 2099000, 1953000],
+        ['Philadelphia, PA', 1526000, 1517000]
+      ]);
+
+      var barOptions = {
+        chart: {
+          title: 'Mensagens Enviadas por Participantes',
+          subtitle: 'Total de mensagens da sala'
+        },
+        hAxis: {
+          title: 'Total de Mensagens',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'Participantes'
+        },
+        bars: 'horizontal'
+      };
+    
+      var barChart = new google.charts.Bar(document.getElementById('graph1'));
+      barChart.draw(dataBar, barOptions);
        
-       <% if (db_data) { %>
-       		 myArray.push (["Minutos","Mensagens"]);
-	   		<% for(var i=0; i < db_data.data.length; i++) { %>
-        	     myArray.push (["<%= db_data.data[i].label %>",<%= db_data.data[i].value %>]);
+       //================================
+       // Grafico de Linhas
+       //================================
+       
+       var myArrayLine = [];
+       <% if (db_line) { %>
+       		 myArrayLine.push (["Minutos","Mensagens"]);
+	   		<% for(var i=0; i < db_line.data.length; i++) { %>
+        	     myArrayLine.push (["<%= db_line.data[i].label %>",<%= db_line.data[i].value %>]);
 	  		 <% } %>
        <% } %>
-       console.table (myArray);
        
-       var data = google.visualization.arrayToDataTable(myArray);
+       
+       var dataLine = google.visualization.arrayToDataTable(myArrayLine);
         
-        var options = {
+        var optionsLine = {
           title: 'Mensagens por Minuto',
           curveType: 'function',
-          legend: { position: 'top' }
+          legend: { position: 'bottom' }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('graph3'));
-    	chart.draw(data, options);
-        
+        var chartLine = new google.visualization.LineChart(document.getElementById('graph3'));
+    	chartLine.draw(dataLine, optionsLine);
       }
     </script>
 
