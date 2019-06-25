@@ -23,7 +23,8 @@ app.get('/', async(req,res) =>{
 	const dwrjs = require ( __dirname+'/dashboard/dashboardWorker.js');
 	dwr = new dwrjs();
 	console.log(dwr.dashtoString());
-	await dwr.execute('teste2').then( function () {
+	 dwr.execute('teste2').then( result => {
+		dwr.process(result);
 		db_data = dwr.getContadoresforGoogleChart();
 		res.render(__dirname+"/ejs/index", { db_data:db_data } );
 	}) 
