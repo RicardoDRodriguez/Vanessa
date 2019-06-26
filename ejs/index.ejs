@@ -10,24 +10,29 @@
        // ==============================================================
        // Grafico de Barras
        // ==============================================================
-        var myArrayBar  = [];
-        var myArrayBar1 = [];
+        var myArrayBar    = [];
+        var myArrayBar1   = [];
+        var myArrayBooble = [];
+        
+
         <% if (db_bar) { %>
-       		 myArrayBar.push (['Participante', 'Mensagens']);
-       		 myArrayBar1.push (['Participante', 'Caracteres']);
+       		 myArrayBar.push (['Participante', 'Mensagens',{ role: 'style' }]);
+       		 myArrayBar1.push (['', 'Caracteres',{ role: 'style' }]);
+       		 myArrayBooble.push (['Participante', 'Mensagens','Caracteres',{ role: 'style' }]);
 	   		<% for(var i=0; i < db_line.data.length; i++) { %>
-        	     myArrayBar.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value %>]);
-        	     myArrayBar1.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value1 %>]);
+	   			 myArrayBooble.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value%>,<%= db_bar.data[i].value1 %>], '<%= bar_color[i] %>');
+        	     myArrayBar.push  (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value %>,  '<%= bar_color[i] %>']);
+        	     myArrayBar1.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value1 %>, '<%= bar_color[i] %>']);
 	  		 <% } %>
        <% } %>
        
 	  var dataBar = google.visualization.arrayToDataTable(myArrayBar);
 	  var dataBar1 = google.visualization.arrayToDataTable(myArrayBar1);
-
+	  var dataBooble = google.visualization.arrayToDataTable(myArrayBooble);
+	  
       var barOptions = {
         chart: {
-          title: 'Mensagens Enviadas por Participantes',
-          subtitle: 'Total de mensagens da sala'
+          title: 'Mensagens',
         },
         hAxis: {
           title: 'Total de Mensagens',
@@ -37,20 +42,49 @@
           title: 'Participantes'
         },
         bars: 'horizontal',
-        width: '50%'
+        legend: { position: 'none' }
       };
+    
+
+      var barOptions1 = {
+        chart: {
+          title: 'Caracteres',
+        },
+        hAxis: {
+          title: 'Total de Caracteres',
+          minValue: 0,
+        },
+        vAxis: {
+          title: '',
+        },
+        bars: 'horizontal',
+        legend: { position: 'none' }
+      };
+    
+      var boobleOptions = {
+        title: 'Mensagens' ,
+        hAxis: {title: 'Mensagens'},
+        vAxis: {title: 'Participantes'},
+        bubble: {textStyle: {fontSize: 10}}
+     }
+ 
     
       var barChart = new google.charts.Bar(document.getElementById('graph11'));
       barChart.draw(dataBar, barOptions);
       
       var barChart1 = new google.charts.Bar(document.getElementById('graph12'));
-      barChart1.draw(dataBar1, barOptions);
+      barChart1.draw(dataBar1, barOptions1);
+
+      var boobleChart =  new google.visualization.BubbleChart(document.getElementById('graph3'));
+      boobleChart.draw(dataBooble, boobleOptions);
+
        
        //================================
        // Grafico de Linhas
        //================================
        
        var myArrayLine = [];
+    
        <% if (db_line) { %>
        		 myArrayLine.push (["Minutos","Mensagens"]);
 	   		<% for(var i=0; i < db_line.data.length; i++) { %>
@@ -67,15 +101,17 @@
           legend: { position: 'bottom' }
         };
 
-        var chartLine = new google.visualization.LineChart(document.getElementById('graph3'));
+        var chartLine = new google.visualization.LineChart(document.getElementById('graph2'));
     	chartLine.draw(dataLine, optionsLine);
       }
     </script>
 
-	<div id='graph1' width='100%'>
-		<div id='graph11' width='50%'></div>
-		<div id='graph12' width='50%'></div>
-	</div>
+	<table class="columns">
+      <tr>
+        <td><div id='graph11' width='50%'></div></td>
+        <td><div id='graph12' width='50%'></div></td>
+      </tr>
+    </table>
 
 	<div id='graph2'>
 	</div>

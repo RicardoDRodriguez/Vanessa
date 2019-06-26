@@ -22,12 +22,52 @@ app.get('/', async(req,res) =>{
 
 	const dwrjs = require ( __dirname+'/dashboard/dashboardWorker.js');
 	dwr = new dwrjs();
+	var bar_color = [ 
+    	"color: #003f5c,",
+    	"color: #58508d",
+    	"color: #bc5090",
+    	"color: #ff6361",
+    	"color: #ffa600",
+    	"color: #2f4b7c",
+    	"color: #665191",
+    	"color: #a05195",
+    	"color: #d45087",
+    	"color: #f95d6a",
+    	"color: #ff7c43",
+    	"color: #ffa600",
+    	"color: #aecdc2",
+    	"color: #6aaa96",
+    	"color: #f0b8b8",
+    	"color: #e67f83",
+    	"color: #de425b",
+    	"color: #bad0af",
+    	"color: #e66572",  
+    	"color: #003f5c",
+    	"color: #58508d",
+    	"color: #bc5090",
+    	"color: #ff6361",
+    	"color: #ffa600",
+    	"color: #2f4b7c",
+    	"color: #665191",
+    	"color: #a05195",
+    	"color: #d45087",
+    	"color: #f95d6a",
+    	"color: #ff7c43",
+    	"color: #ffa600",
+    	"color: #aecdc2",
+    	"color: #6aaa96",
+    	"color: #f0b8b8",
+    	"color: #e67f83",
+    	"color: #de425b",
+    	"color: #bad0af",
+    	"color: #e66572", 
+    ];
 	console.log(dwr.dashtoString());
 	 dwr.execute('teste2').then( result => {
 		dwr.process(result);
 		db_line = dwr.getContadoresforGoogleChart();
 		db_bar = dwr.getBarforGoogleChart();
-		res.render(__dirname+"/ejs/index", { db_line: db_line, db_bar: db_bar } );
+		res.render(__dirname+"/ejs/index", { db_line: db_line, db_bar: db_bar, bar_color: bar_color} );
 	}) 
 });
 
