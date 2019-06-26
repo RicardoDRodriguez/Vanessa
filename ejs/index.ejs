@@ -10,15 +10,19 @@
        // ==============================================================
        // Grafico de Barras
        // ==============================================================
-        var myArrayBar = [];
+        var myArrayBar  = [];
+        var myArrayBar1 = [];
         <% if (db_bar) { %>
-       		 myArrayBar.push (['Participante', 'Mensagens', 'Caracteres']);
+       		 myArrayBar.push (['Participante', 'Mensagens']);
+       		 myArrayBar1.push (['Participante', 'Caracteres']);
 	   		<% for(var i=0; i < db_line.data.length; i++) { %>
-        	     myArrayBar.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value %>,<%= db_bar.data[i].value1 %>]);
+        	     myArrayBar.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value %>]);
+        	     myArrayBar1.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value1 %>]);
 	  		 <% } %>
        <% } %>
        
 	  var dataBar = google.visualization.arrayToDataTable(myArrayBar);
+	  var dataBar1 = google.visualization.arrayToDataTable(myArrayBar1);
 
       var barOptions = {
         chart: {
@@ -32,11 +36,15 @@
         vAxis: {
           title: 'Participantes'
         },
-        bars: 'horizontal'
+        bars: 'horizontal',
+        width: '50%'
       };
     
-      var barChart = new google.charts.Bar(document.getElementById('graph1'));
+      var barChart = new google.charts.Bar(document.getElementById('graph11'));
       barChart.draw(dataBar, barOptions);
+      
+      var barChart1 = new google.charts.Bar(document.getElementById('graph12'));
+      barChart1.draw(dataBar1, barOptions);
        
        //================================
        // Grafico de Linhas
@@ -64,8 +72,9 @@
       }
     </script>
 
-	<div id='graph1'>
- 
+	<div id='graph1' width='100%'>
+		<div id='graph11' width='50%'></div>
+		<div id='graph12' width='50%'></div>
 	</div>
 
 	<div id='graph2'>
