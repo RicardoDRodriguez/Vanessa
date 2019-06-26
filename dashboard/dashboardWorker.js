@@ -28,7 +28,7 @@ DashboardWorker = function () {
 
 	this.execute=  async function(sala){
 
-		console.log('Entrei no execute');
+		//console.log('Entrei no execute');
 		const {Pool,Client} = require('pg');
 		const myQuery = "select * from xmpp_log where (msg_room = '"+sala+"');"
 
@@ -40,28 +40,29 @@ DashboardWorker = function () {
 
 			await client.connect()
 			tablerows = new Array();
-			console.log('=========================================================================================');
-			console.log ("conexão realizada com sucesso");
 			
-			console.log (myQuery);
+			//console.log('=========================================================================================');
+			//console.log ("conexão realizada com sucesso");
 			
-			console.log('=========================================================================================');
-			console.log ("Aguardando a execução da query");
+			//console.log (myQuery);
+			
+			//console.log('=========================================================================================');
+			//console.log ("Aguardando a execução da query");
 			
 			var res = await client.query(myQuery);
 			
-			console.log('=========================================================================================');
-			console.log ("Carregando linhas no objeto result");
+			//console.log('=========================================================================================');
+			//console.log ("Carregando linhas no objeto result");
 			
 			var result = res.rows;
 			
-			console.log('=========================================================================================');
-			console.log ("Aguardando fim da conexão");
+			//console.log('=========================================================================================');
+			//console.log ("Aguardando fim da conexão");
 
 			await client.end();
 
-			console.log('=========================================================================================');
-			console.log ("Processo Encerrado retornando result");
+			//console.log('=========================================================================================');
+			//console.log ("Processo Encerrado retornando result");
 
 			// console.table(result);
 			
@@ -78,9 +79,9 @@ DashboardWorker = function () {
 	},
 
 	this.process= function(result) {
-		console.log('=========================================================================================');
+		//console.log('=========================================================================================');
 		//---------------------------------------------------------------------------------------------------
-		console.log ('acesso ao moduloDashboardWorker.processo');
+		//console.log ('acesso ao moduloDashboardWorker.processo');
 		//	-------------------------------------------------------------------------------------------------
 		const Participante = require('./participante.js');
 		const Mensagem = require('./mensagem.js');
@@ -98,7 +99,7 @@ DashboardWorker = function () {
 
 		if (result[0]){
 			start = result[0].msg_time;
-			console.log('Start: ' + start);
+			//console.log('Start: ' + start);
 		}
 
 		for(var i= 0 ; i < result.length ; ++i) {
@@ -140,9 +141,10 @@ DashboardWorker = function () {
 		}
 
 		//console.table(this.participantes);
-		console.log("==================================================================");
+		//console.log("==================================================================");
 		// console.table(contadoresMensagens);
 		//	--------------------------------------------------
+		
 		return true;
 	}
 
@@ -184,15 +186,16 @@ DashboardWorker = function () {
 	},
 
 	this.getContadoresforGoogleChart= function(){
-		console.log('=============================================================');
-		console.log('Iniciei o getContadores');
+		//console.log('=============================================================');
+		//console.log('Iniciei o getContadores');
 		
 		var start = (contadoresMensagens.length) - 11;
 
 		if (start < 0) start = 0;
 		var arrayLabelValue = [];
-		console.log('=============================================================');
-		console.log('start => ' , start);
+		
+		//console.log('=============================================================');
+		//console.log('start => ' , start);
 		
 		for (var z = start; z < contadoresMensagens.length; ++z){
 			var posicao ="M-"+(contadoresMensagens.length-z-1)
@@ -205,8 +208,9 @@ DashboardWorker = function () {
 	},
 
 	this.getBarforGoogleChart= function(){
-		console.log('=============================================================');
-		console.log('Iniciei o getContadores');
+	
+		//console.log('=============================================================');
+		//console.log('Iniciei o getContadores');
 		
 		var start = 0;
 
@@ -219,8 +223,8 @@ DashboardWorker = function () {
 
 		var data = { 'data' : arrayLabelValue};
 		
-		console.log('=============================================================');
-		console.log(data);
+		//console.log('=============================================================');
+		//console.log(data);
 		
 		return data;
 	},

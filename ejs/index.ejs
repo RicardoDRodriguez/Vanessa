@@ -20,7 +20,7 @@
        		 myArrayBar1.push (['', 'Caracteres',{ role: 'style' }]);
        		 myArrayBooble.push (['Participante', 'Mensagens','Caracteres',{ role: 'style' }]);
 	   		<% for(var i=0; i < db_line.data.length; i++) { %>
-	   			 myArrayBooble.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value%>,<%= db_bar.data[i].value1 %>], '<%= bar_color[i] %>');
+	   			 myArrayBooble.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value%>,<%= db_bar.data[i].value1 %>, '<%= bar_color[i] %>']);
         	     myArrayBar.push  (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value %>,  '<%= bar_color[i] %>']);
         	     myArrayBar1.push (["<%= db_bar.data[i].label %>",<%= db_bar.data[i].value1 %>, '<%= bar_color[i] %>']);
 	  		 <% } %>
@@ -64,8 +64,8 @@
       var boobleOptions = {
         title: 'Mensagens' ,
         hAxis: {title: 'Mensagens'},
-        vAxis: {title: 'Participantes'},
-        bubble: {textStyle: {fontSize: 10}}
+        vAxis: {title: 'Participantes',  minValue: -10, format: '0',},
+        bubble: {textStyle: {fontSize: 9, }, legends:'none',  },
      }
  
     
@@ -104,6 +104,7 @@
         var chartLine = new google.visualization.LineChart(document.getElementById('graph2'));
     	chartLine.draw(dataLine, optionsLine);
       }
+      
     </script>
 
 	<table class="columns">
@@ -111,6 +112,13 @@
         <td><div id='graph11' width='50%'></div></td>
         <td><div id='graph12' width='50%'></div></td>
       </tr>
+      <tr>
+        <td colspan=2><div id='graph2'></div></td>
+      </tr>
+      <tr>
+        <td colspan=2><div id='graph3'></div></td>
+      </tr>
+       
     </table>
 
 	<div id='graph2'>
