@@ -33,7 +33,7 @@ DashboardWorker = function () {
 		const myQuery = "select * from xmpp_log where (msg_room = '"+sala+"');"
 
 		try { 
-			const connectionString = 'postgressql://postgres:postgres@localhost:5432/openfire';
+			const connectionString = 'postgressql://vanessa:>vanessa2019@localhost:5432/openfire';
 			const client = new Client({
 				connectionString:connectionString
 			})

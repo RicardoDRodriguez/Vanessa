@@ -63,7 +63,7 @@ app.get('/', async(req,res) =>{
 	const dwrjs = require ( __dirname+'/dashboard/dashboardWorker.js');
 	dwr = new dwrjs();
 	console.log(dwr.dashtoString());
-	dwr.execute('teste2').then( result => {
+	dwr.execute('teste3').then( result => {
 		dwr.process(result);
 		db_line = dwr.getContadoresforGoogleChart();
 		db_bar = dwr.getBarforGoogleChart();
